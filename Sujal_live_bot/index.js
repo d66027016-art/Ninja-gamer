@@ -15,6 +15,9 @@ const io = new Server(server);
 let isAfkEnabled = true;
 let autoMsgTimer = null;
 let lastAutoMsgTime = Date.now();
+let isNavigating = false;
+let distanceInterval = null;
+let retryTimeout = null;
 
 app.use(express.static('public'));
 
@@ -148,9 +151,10 @@ function createBot() {
     const clean = jsonMsg.toString();
     const lower = clean.toLowerCase();
 
-    if (lower.includes('/register') || lower.includes('register')) {
+    // Specific Registration Trigger (Prevents loop if already registered/logged)
+    if ((lower.includes('/register') || lower.includes('register')) && !lower.includes('already')) {
       bot.chat('/register Bot@12345 Bot@12345');
-    } else if (lower.includes('/login') || lower.includes('login') || lower.includes('autenticar')) {
+    } else if ((lower.includes('/login') || lower.includes('login') || lower.includes('autenticar')) && !lower.includes('already')) {
       bot.chat('/login Bot@12345');
     }
 
@@ -270,9 +274,10 @@ function createBot() {
     setTimeout(() => {
       bot.chat('/login Bot@12345'); // Fallback login attempt
       setTimeout(() => {
-        joinSurvival();
-      }, 5000);
-    }, 2000);
+        // Only trigger if not already navigating or in survival
+        if (!isNavigating) joinSurvival();
+      }, 10000); // Increased delay for server stability
+    }, 4000);
 
     // Start simple auto-messenger
     startAutoMessenger();
@@ -298,7 +303,14 @@ function createBot() {
 // --- Global Functions for Bot Control ---
 
 function joinSurvival() {
-  if (!bot) return;
+  if (!bot || isNavigating) return;
+  
+  // Clear any existing timers to prevent duplicates
+  if (distanceInterval) clearInterval(distanceInterval);
+  if (retryTimeout) clearTimeout(retryTimeout);
+
+  isNavigating = true;
+
   // Temporarily disable AFK movement so it doesn't fight the pathfinder
   const wasAfk = isAfkEnabled;
   isAfkEnabled = false;
@@ -308,19 +320,21 @@ function joinSurvival() {
   const nZ = parseFloat(process.env.NPC_Z) || 15;
 
   console.log(`Checking distance to NPC at ${nX}, ${nY}, ${nZ}...`);
-  if (bot.entity && bot.entity.position.distanceTo(new Vec3(nX, nY, nZ)) > 500) {
-    console.log('[Nav] Bot is too far from lobby coordinates (>500 blocks). You might already be in Survival or a different world. Cancelling auto-join.');
+  if (bot.entity && bot.entity.position.distanceTo(new Vec3(nX, nY, nZ)) > 200) {
+    console.log('[Nav] Bot is already far from lobby NPC. Assuming Survival.');
     isAfkEnabled = true;
+    isNavigating = false;
     randomMovement();
     return;
   }
 
   const goal = new GoalNear(nX, nY, nZ, 1);
 
-  // Stealth Movements: No sprinting/parkour in lobby to avoid Vulcan
+  // Stealth Movements: No digging, sprinting, or parkour in lobby
   const lobbyMovements = new Movements(bot);
   lobbyMovements.allowSprinting = false;
   lobbyMovements.allowParkour = false;
+  lobbyMovements.canDig = false;
 
   bot.pathfinder.setMovements(lobbyMovements);
   bot.pathfinder.setGoal(goal);
@@ -336,7 +350,7 @@ function joinSurvival() {
   bot.on('path_update', onPathUpdate);
 
   // Periodic Distance Logging
-  const distanceInterval = setInterval(() => {
+  distanceInterval = setInterval(() => {
     if (bot.entity && bot.entity.position) {
       const pos = bot.entity.position;
       if (!isNaN(pos.x) && !isNaN(pos.y) && !isNaN(pos.z)) {
@@ -347,7 +361,7 @@ function joinSurvival() {
     }
   }, 5000);
 
-  let retryTimeout;
+  // No local declaration needed; using global retryTimeout
 
   bot.once('goal_reached', () => {
     console.log('Arrived at NPC location. Stopping and waiting (Human Pause)...');
@@ -381,26 +395,26 @@ function joinSurvival() {
           // Small delay before secondary interaction
           setTimeout(() => bot.useOn(entity), 500);
         } else {
-          console.log('No specific entity found within 5 blocks. Checking block interaction...');
-          const block = bot.blockAt(new Vec3(nX, nY, nZ));
-          if (block) bot.activateBlock(block);
+          console.log('No specific NPC found within 5 blocks. Retrying in loop...');
         }
       });
     }, 2000);
 
     retryTimeout = setTimeout(() => {
       // If 15s later we are still near the lobby spawn, retry
-      if (bot.entity && bot.entity.position.distanceTo(new Vec3(nX, nY, nZ)) < 10) {
+      if (bot.entity && bot.entity.position.distanceTo(new Vec3(nX, nY, nZ)) < 15) {
         console.log('Still in lobby area. Retrying Join Survival...');
         bot.removeListener('path_update', onPathUpdate);
-        clearInterval(distanceInterval);
-        isAfkEnabled = wasAfk; // Restore state before retry to be safe
+        if (distanceInterval) clearInterval(distanceInterval);
+        isAfkEnabled = wasAfk;
+        isNavigating = false; // Reset to allow retry
         joinSurvival();
       } else {
         console.log('AFK bot online in Survival!');
         bot.removeListener('path_update', onPathUpdate);
-        clearInterval(distanceInterval);
-        isAfkEnabled = true; // Bot reached survival, enable AFK
+        if (distanceInterval) clearInterval(distanceInterval);
+        isAfkEnabled = true;
+        isNavigating = false; // Successfully reached
         randomMovement();
       }
     }, 15000);
