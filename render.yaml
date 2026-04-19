@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: ninja-gamer-bot
+    env: node
+    region: singapore
+    rootDir: Sujal_live_bot
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: BOT_HOST
+        value: play.khushigaming.com
+      - key: BOT_PORT
+        value: 1241
+      - key: BOT_USERNAME
+        value: Ninja_gamer_bot
+      - key: ADMIN_PASS
+        value: Ninja123
+      - key: PORT
+        value: 10000
+      - key: NPC_X
+        value: 34
+      - key: NPC_Y
+        value: 105
+      - key: NPC_Z
+        value: 14
+      - key: LOOK_X
+        value: 34
+      - key: LOOK_Y
+        value: 106
+      - key: LOOK_Z
+        value: 14
