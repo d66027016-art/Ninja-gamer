@@ -12,7 +12,7 @@ services:
       - key: BOT_PORT
         value: 1241
       - key: BOT_USERNAME
-        value: Ninja_gamer_bot
+        value: Ninja_gamer_bott
       - key: ADMIN_PASS
         value: Ninja123
       - key: PORT
