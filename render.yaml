@@ -29,3 +29,5 @@ services:
         value: 106
       - key: LOOK_Z
         value: 14
+      - key: NODE_VERSION
+        value: 20
