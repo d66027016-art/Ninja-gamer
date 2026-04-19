@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sujal_live_bot | Console</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=VT323&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=VT323&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg: #0a0c10;
@@ -37,7 +40,10 @@
         /* Login Overlay */
         #login-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: var(--bg);
             backdrop-filter: blur(10px);
             display: flex;
@@ -53,13 +59,18 @@
             border: 1px solid var(--border);
             width: 380px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
 
-        .login-card h2 { margin-bottom: 2rem; font-weight: 600; letter-spacing: -0.5px; }
+        .login-card h2 {
+            margin-bottom: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
         .login-card input {
             width: 100%;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--border);
             padding: 1rem;
             border-radius: 12px;
@@ -69,7 +80,11 @@
             outline: none;
             transition: border-color 0.3s;
         }
-        .login-card input:focus { border-color: var(--accent); }
+
+        .login-card input:focus {
+            border-color: var(--accent);
+        }
+
         .login-card button {
             width: 100%;
             padding: 1rem;
@@ -81,7 +96,10 @@
             cursor: pointer;
             transition: transform 0.2s;
         }
-        .login-card button:active { transform: scale(0.98); }
+
+        .login-card button:active {
+            transform: scale(0.98);
+        }
 
         /* Main Layout */
         .sidebar {
@@ -140,7 +158,7 @@
         .progress-container {
             width: 100%;
             height: 8px;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 4px;
             overflow: hidden;
         }
@@ -151,8 +169,15 @@
             transition: width 0.5s ease;
         }
 
-        #health-bar { background: var(--danger); box-shadow: 0 0 10px rgba(248, 81, 73, 0.4); }
-        #food-bar { background: var(--warning); box-shadow: 0 0 10px rgba(210, 153, 34, 0.4); }
+        #health-bar {
+            background: var(--danger);
+            box-shadow: 0 0 10px rgba(248, 81, 73, 0.4);
+        }
+
+        #food-bar {
+            background: var(--warning);
+            box-shadow: 0 0 10px rgba(210, 153, 34, 0.4);
+        }
 
         .coords {
             display: grid;
@@ -163,13 +188,18 @@
         }
 
         .coord-box {
-            background: rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.2);
             padding: 8px;
             border-radius: 8px;
             text-align: center;
         }
 
-        .coord-label { font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 2px; }
+        .coord-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 2px;
+        }
 
         /* Action Buttons */
         .actions {
@@ -182,7 +212,7 @@
             padding: 0.8rem;
             border-radius: 10px;
             border: 1px solid var(--border);
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             color: var(--text);
             font-weight: 500;
             cursor: pointer;
@@ -193,9 +223,20 @@
             gap: 8px;
         }
 
-        .btn:hover { background: rgba(255,255,255,0.08); border-color: var(--text-muted); }
-        .btn-primary { background: var(--accent); border: none; color: white; }
-        .btn-primary:hover { opacity: 0.9; }
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--text-muted);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            border: none;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
 
         /* Console */
         #console {
@@ -213,15 +254,29 @@
             scroll-behavior: smooth;
         }
 
-        .log-entry { 
-            line-height: 1.2; 
+        .log-entry {
+            line-height: 1.2;
             word-break: break-all;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
         }
-        .log-time { color: #aaaaaa; margin-right: 10px; font-size: 1rem; }
-        .log-type-info { color: #55ffff; }
-        .log-type-server { color: #ffffff; }
-        .log-type-bot { color: #55ff55; }
+
+        .log-time {
+            color: #aaaaaa;
+            margin-right: 10px;
+            font-size: 1rem;
+        }
+
+        .log-type-info {
+            color: #55ffff;
+        }
+
+        .log-type-server {
+            color: #ffffff;
+        }
+
+        .log-type-bot {
+            color: #55ff55;
+        }
 
         .input-area {
             display: flex;
@@ -239,12 +294,17 @@
             font-family: 'Fira Code', monospace;
         }
 
-        #cmd-input:focus { border-color: var(--accent); }
+        #cmd-input:focus {
+            border-color: var(--accent);
+        }
 
         /* Animation */
         .online-dot {
-            width: 8px; height: 8px; background: var(--success);
-            border-radius: 50%; box-shadow: 0 0 10px var(--success);
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--success);
             animation: pulse 2s infinite;
         }
 
@@ -274,14 +334,14 @@
 
         .inv-character {
             aspect-ratio: 1/1.5;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--border);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            color: rgba(255,255,255,0.1);
+            color: rgba(255, 255, 255, 0.1);
         }
 
         .inv-crafting {
@@ -314,7 +374,7 @@
 
         .inv-slot {
             aspect-ratio: 1;
-            background: rgba(0,0,0,0.25);
+            background: rgba(0, 0, 0, 0.25);
             border: 1px solid var(--border);
             border-radius: 4px;
             display: flex;
@@ -328,7 +388,7 @@
 
         .inv-slot:hover {
             border-color: var(--accent);
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .inv-slot.empty::before {
@@ -360,23 +420,98 @@
             display: none;
             width: 130px;
             pointer-events: auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
-        .inv-slot:hover .tooltip { display: block; }
+        .inv-slot:hover .tooltip {
+            display: block;
+        }
 
         /* Minecraft Colors */
-        .color-span { display: inline; text-shadow: 1px 1px 0 rgba(0,0,0,0.5); }
-        .mc-0 { color: #000000 !important; } .mc-1 { color: #0000AA !important; }
-        .mc-2 { color: #00AA00 !important; } .mc-3 { color: #00AAAA !important; }
-        .mc-4 { color: #AA0000 !important; } .mc-5 { color: #AA00AA !important; }
-        .mc-6 { color: #FFAA00 !important; } .mc-7 { color: #AAAAAA !important; }
-        .mc-8 { color: #555555 !important; } .mc-9 { color: #5555FF !important; }
-        .mc-a { color: #55FF55 !important; } .mc-b { color: #55FFFF !important; }
-        .mc-c { color: #FF5555 !important; } .mc-d { color: #FF55FF !important; }
-        .mc-e { color: #FFFF55 !important; } .mc-f { color: #FFFFFF !important; }
-        .mc-l { font-weight: bold; } .mc-m { text-decoration: line-through; }
-        .mc-n { text-decoration: underline; } .mc-o { font-style: italic; }
+        .color-span {
+            display: inline;
+            text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .mc-0 {
+            color: #000000 !important;
+        }
+
+        .mc-1 {
+            color: #0000AA !important;
+        }
+
+        .mc-2 {
+            color: #00AA00 !important;
+        }
+
+        .mc-3 {
+            color: #00AAAA !important;
+        }
+
+        .mc-4 {
+            color: #AA0000 !important;
+        }
+
+        .mc-5 {
+            color: #AA00AA !important;
+        }
+
+        .mc-6 {
+            color: #FFAA00 !important;
+        }
+
+        .mc-7 {
+            color: #AAAAAA !important;
+        }
+
+        .mc-8 {
+            color: #555555 !important;
+        }
+
+        .mc-9 {
+            color: #5555FF !important;
+        }
+
+        .mc-a {
+            color: #55FF55 !important;
+        }
+
+        .mc-b {
+            color: #55FFFF !important;
+        }
+
+        .mc-c {
+            color: #FF5555 !important;
+        }
+
+        .mc-d {
+            color: #FF55FF !important;
+        }
+
+        .mc-e {
+            color: #FFFF55 !important;
+        }
+
+        .mc-f {
+            color: #FFFFFF !important;
+        }
+
+        .mc-l {
+            font-weight: bold;
+        }
+
+        .mc-m {
+            text-decoration: line-through;
+        }
+
+        .mc-n {
+            text-decoration: underline;
+        }
+
+        .mc-o {
+            font-style: italic;
+        }
 
         .switch {
             position: relative;
@@ -415,19 +550,20 @@
             border-radius: 50%;
         }
 
-        input:checked + .slider {
+        input:checked+.slider {
             background-color: var(--primary-color);
         }
 
-        input:checked + .slider:before {
+        input:checked+.slider:before {
             transform: translateX(14px);
         }
     </style>
 </head>
+
 <body>
     <div id="login-overlay">
         <div class="login-card">
-            <h2>Sujal_live_bot Console</h2>
+            <h2>Ninja_gamer_bot Console</h2>
             <input type="password" id="admin-pass" placeholder="Authorization Token">
             <button onclick="login()">Access Console</button>
         </div>
@@ -446,15 +582,19 @@
                     <span style="color:var(--success); font-size: 0.75rem;">LIVE</span>
                 </div>
             </div>
-            
+
             <div class="stat-group" style="margin-top: 1.5rem;">
                 <div class="stat-header"><span>Health</span><span id="health-val">20/20</span></div>
-                <div class="progress-container"><div id="health-bar" class="progress-bar" style="width: 100%"></div></div>
+                <div class="progress-container">
+                    <div id="health-bar" class="progress-bar" style="width: 100%"></div>
+                </div>
             </div>
 
             <div class="stat-group">
                 <div class="stat-header"><span>Hunger</span><span id="food-val">20/20</span></div>
-                <div class="progress-container"><div id="food-bar" class="progress-bar" style="width: 100%"></div></div>
+                <div class="progress-container">
+                    <div id="food-bar" class="progress-bar" style="width: 100%"></div>
+                </div>
             </div>
 
             <div class="coords">
@@ -464,9 +604,14 @@
             </div>
 
             <!-- Countdown Timer -->
-            <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;">
-                <div style="font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Next Auto Msg In</div>
-                <div id="promo-timer" style="font-size: 1.5rem; font-weight: 700; color: #58a6ff; font-family: monospace; text-shadow: 0 0 10px rgba(88,166,255,0.3); transition: color 0.3s;">--:--</div>
+            <div
+                style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;">
+                <div
+                    style="font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">
+                    Next Auto Msg In</div>
+                <div id="promo-timer"
+                    style="font-size: 1.5rem; font-weight: 700; color: #58a6ff; font-family: monospace; text-shadow: 0 0 10px rgba(88,166,255,0.3); transition: color 0.3s;">
+                    --:--</div>
             </div>
         </div>
 
@@ -475,7 +620,7 @@
                 <span>INVENTORY</span>
                 <span id="inv-count-total" style="font-size: 0.75rem; color: var(--text-muted);">0 items</span>
             </div>
-            
+
             <div class="inv-classic-container">
                 <!-- Top Section -->
                 <div class="inv-top-section">
@@ -525,7 +670,8 @@
     <main class="main-content">
         <div id="console"></div>
         <div class="input-area">
-            <input type="text" id="cmd-input" placeholder="Type command... (e.g. /tpa Sunil)" onkeydown="if(event.key==='Enter') sendCmd()">
+            <input type="text" id="cmd-input" placeholder="Type command... (e.g. /tpa Sunil)"
+                onkeydown="if(event.key==='Enter') sendCmd()">
             <button class="btn btn-primary" style="padding: 0 1.5rem;" onclick="sendCmd()">Send</button>
         </div>
     </main>
@@ -567,11 +713,11 @@
 
         socket.on('status', (data) => {
             if (!authenticated) return;
-            
+
             // Update Bars
             document.getElementById('health-bar').style.width = (data.health / 20 * 100) + '%';
             document.getElementById('health-val').innerText = Math.round(data.health) + '/20';
-            
+
             document.getElementById('food-bar').style.width = (data.food / 20 * 100) + '%';
             document.getElementById('food-val').innerText = Math.round(data.food) + '/20';
 
@@ -596,7 +742,7 @@
 
             // Handle standard text
             let text = json.text || '';
-            
+
             // Handle Minecraft "Translate" messages (e.g. death messages, join messages)
             if (json.translate) {
                 // If there's a translate key, it usually has 'with' for variables
@@ -631,7 +777,7 @@
             const entry = document.createElement('div');
             entry.className = 'log-entry';
             const time = new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
-            
+
             // Render Minecraft Colors from § codes
             const formattedContent = renderMcText(msg);
 
@@ -640,10 +786,10 @@
                 <span class="log-type" style="color: ${colorMap[level] || 'white'}">[${type}]</span>
                 <span class="log-msg">${formattedContent}</span>
             `;
-            
+
             consoleDiv.appendChild(entry);
             consoleDiv.scrollTop = consoleDiv.scrollHeight;
-            
+
             if (consoleDiv.children.length > 200) {
                 consoleDiv.removeChild(consoleDiv.firstChild);
             }
@@ -652,7 +798,7 @@
         function renderMcText(text) {
             if (!text) return '';
             if (typeof text !== 'string') text = String(text);
-            
+
             let result = '';
             let openSpans = 1;
             result += '<span class="color-span">';
@@ -666,7 +812,7 @@
                 if (part.length === 0) continue;
 
                 const firstChar = part.charAt(0).toLowerCase();
-                
+
                 if (firstChar === '#') {
                     // Check for Hex: #RRGGBB (6 chars)
                     const hexMatch = part.match(/^#([A-Fa-f0-9]{6})(.*)/);
@@ -679,17 +825,17 @@
                 }
 
                 if (firstChar === 'r') {
-                    while(openSpans > 0) { result += '</span>'; openSpans--; }
+                    while (openSpans > 0) { result += '</span>'; openSpans--; }
                     result += '<span class="color-span">'; openSpans++;
                 } else if ("0123456789abcdefklmno".includes(firstChar)) {
                     result += `<span class="mc-${firstChar}">`;
                     openSpans++;
                 }
-                
+
                 result += part.substring(1);
             }
-            
-            while(openSpans > 0) { result += '</span>'; openSpans--; }
+
+            while (openSpans > 0) { result += '</span>'; openSpans--; }
             return result;
         }
 
@@ -705,14 +851,14 @@
 
         socket.on('inventory', (slots) => {
             if (!authenticated) return;
-            
+
             const totalItems = slots.filter(s => !s.isEmpty).length;
             document.getElementById('inv-count-total').innerText = `${totalItems} items`;
-            
+
             // Initialize Grid Containers if first time
             const mainGrid = document.getElementById('inv-main-grid');
             const hotbarGrid = document.getElementById('inv-hotbar');
-            
+
             if (mainGrid.innerHTML === '') {
                 for (let i = 9; i <= 35; i++) {
                     const slotDiv = document.createElement('div');
@@ -740,7 +886,7 @@
                     slotDiv.innerHTML = '';
                 } else {
                     slotDiv.classList.remove('empty');
-                    
+
                     let icon = '📦';
                     const name = item.name.toLowerCase();
                     if (name.includes('sword')) icon = '⚔️';
@@ -754,7 +900,7 @@
                     else if (name.includes('bow')) icon = '🏹';
                     else if (name.includes('arrow')) icon = '📍';
                     else if (name.includes('cobblestone') || name.includes('stone') || name.includes('dirt')) icon = '🧱';
-                    
+
                     slotDiv.innerHTML = `
                         <span>${icon}</span>
                         ${item.count > 1 ? `<span class="slot-count">${item.count}</span>` : ''}
@@ -785,13 +931,13 @@
         socket.on('auto_msg_countdown', (data) => {
             const timerDiv = document.getElementById('promo-timer');
             if (!timerDiv) return;
-            
+
             const totalSeconds = Math.floor(data.remaining / 1000);
             const m = Math.floor(totalSeconds / 60);
             const s = totalSeconds % 60;
-            
+
             timerDiv.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-            
+
             // Add a little glow pulse when close
             if (totalSeconds < 10) {
                 timerDiv.style.color = '#ff7b72';
@@ -803,4 +949,5 @@
         });
     </script>
 </body>
+
 </html>
